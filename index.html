@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Office Locator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ===== LANDING SECTION ===== -->
+    <section class="landing" id="landing">
+
+        <!-- Left panel: description -->
+        <div class="landing-left">
+            <h1 class="landing-title">Post Office Application.</h1>
+            <p class="landing-desc">
+                This Application Allows you to extract information about the
+                nearest Post Offices, based on your ip location.
+            </p>
+            <div class="landing-illustration" aria-hidden="true">
+                <svg viewBox="0 0 220 160" xmlns="http://www.w3.org/2000/svg" class="illus-svg">
+                    <!-- desk -->
+                    <rect x="30" y="110" width="160" height="8" rx="3" fill="#2a2d45"/>
+                    <rect x="50" y="118" width="10" height="28" rx="2" fill="#2a2d45"/>
+                    <rect x="160" y="118" width="10" height="28" rx="2" fill="#2a2d45"/>
+                    <!-- monitor -->
+                    <rect x="70" y="62" width="80" height="52" rx="4" fill="#1a1c2e"/>
+                    <rect x="74" y="66" width="72" height="42" rx="2" fill="#565a85"/>
+                    <!-- screen glow lines -->
+                    <rect x="80" y="72" width="40" height="3" rx="1" fill="#9da2d0" opacity="0.6"/>
+                    <rect x="80" y="79" width="55" height="3" rx="1" fill="#9da2d0" opacity="0.4"/>
+                    <rect x="80" y="86" width="30" height="3" rx="1" fill="#9da2d0" opacity="0.4"/>
+                    <!-- monitor stand -->
+                    <rect x="104" y="114" width="12" height="8" rx="1" fill="#2a2d45"/>
+                    <rect x="96" y="120" width="28" height="4" rx="2" fill="#2a2d45"/>
+                    <!-- person body -->
+                    <ellipse cx="148" cy="95" rx="12" ry="16" fill="#3a3d5c"/>
+                    <!-- person head -->
+                    <circle cx="148" cy="74" r="10" fill="#c8a882"/>
+                    <!-- person hair -->
+                    <ellipse cx="148" cy="67" rx="10" ry="5" fill="#3a2a1a"/>
+                    <!-- arm reaching to keyboard -->
+                    <path d="M140 100 Q125 108 115 110" stroke="#c8a882" stroke-width="5" fill="none" stroke-linecap="round"/>
+                    <!-- keyboard -->
+                    <rect x="90" y="108" width="40" height="6" rx="2" fill="#2a2d45"/>
+                    <!-- chair back -->
+                    <rect x="158" y="78" width="8" height="30" rx="3" fill="#2a2d45"/>
+                    <!-- envelope icon floating -->
+                    <rect x="28" y="50" width="28" height="20" rx="3" fill="#565a85" opacity="0.8"/>
+                    <polyline points="28,50 42,62 56,50" stroke="#9da2d0" stroke-width="1.5" fill="none"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Right panel: IP + button -->
+        <div class="landing-right">
+            <div class="landing-right-inner">
+                <p class="ip-label">Your Current IP Address is</p>
+                <p class="ip-value" id="ip-address">Loading...</p>
+                <button id="get-info-btn">Get Started</button>
+                <p id="status-message" role="status" aria-live="polite"></p>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- ===== DASHBOARD (hidden until Get Started is clicked) ===== -->
+    <main class="dashboard" id="dashboard" hidden>
+
+        <!-- 1. IP & Basic Info -->
+        <section class="dash-section info-section">
+            <div class="info-grid">
+                <div class="info-row">
+                    <span class="info-label">IP Address :</span>
+                    <span class="info-val" id="dash-ip">--</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Lat:</span>
+                    <span class="info-val" id="latitude">--</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Long:</span>
+                    <span class="info-val" id="longitude">--</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">City:</span>
+                    <span class="info-val" id="city">--</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Region:</span>
+                    <span class="info-val" id="region">--</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Organisation:</span>
+                    <span class="info-val" id="organisation">--</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Hostname:</span>
+                    <span class="info-val" id="hostname">--</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Map -->
+        <section class="dash-section map-section">
+            <h2 class="section-heading">Your Current Location</h2>
+            <iframe
+                id="map"
+                title="Map showing your location"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                src="about:blank"
+                allowfullscreen></iframe>
+        </section>
+
+        <!-- 3. More Information -->
+        <section class="dash-section more-section">
+            <h2 class="section-heading-left">More Information About You</h2>
+            <div class="more-grid">
+                <div class="info-row">
+                    <span class="info-label">Time Zone:</span>
+                    <span class="info-val" id="timezone">--</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Date And Time:</span>
+                    <span class="info-val" id="current-time">--</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Pincode:</span>
+                    <span class="info-val" id="pincode">--</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Message:</span>
+                    <span class="info-val" id="post-office-count">--</span>
+                </div>
+            </div>
+            <!-- hidden elements kept for JS compatibility -->
+            <span id="current-date" style="display:none"></span>
+            <span id="country" style="display:none"></span>
+            <span id="country-code" style="display:none"></span>
+            <div id="user-info" style="display:none"></div>
+        </section>
+
+        <!-- 4 & 5 & 6. Post Offices -->
+        <section class="dash-section post-section">
+            <h2 class="section-heading">Post Offices Near You</h2>
+
+            <div class="search-wrapper">
+                <span class="search-icon" aria-hidden="true">&#9906;</span>
+                <input
+                    type="text"
+                    id="search-input"
+                    placeholder="Search By Name"
+                    aria-label="Search post offices by name or branch type"
+                    disabled>
+            </div>
+
+            <p id="post-office-status" role="status" aria-live="polite">
+                Click "Get Started" to load post offices.
+            </p>
+
+            <div id="post-office-list"></div>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
